@@ -9,6 +9,9 @@ type Props = {
 };
 
 class CircularGauge extends React.Component<Props> {
+    percentage: number | undefined = undefined;
+    color: string | undefined = undefined;
+
     getDimension(elm: HTMLElement) {
         const xOffset = 5;
         const yOffset = 5;
@@ -25,10 +28,27 @@ class CircularGauge extends React.Component<Props> {
         };
     }
 
+    componentDidUpdate() {
+        if (
+            this.percentage !== this.props.percentage ||
+            this.color !== this.props.color
+        ) {
+            this.draw();
+            this.percentage = this.props.percentage;
+            this.color = this.props.color;
+        }
+    }
     componentDidMount() {
+        this.draw();
+        this.percentage = this.props.percentage;
+        this.color = this.props.color;
+    }
+
+    draw() {
         const id = this.props.gaugeId + "-canvas";
         const elm = document.getElementById(id);
         const g = d3.select(`#${id}`);
+        g.selectAll("*").remove();
 
         if (elm) {
             const dim = this.getDimension(elm);
