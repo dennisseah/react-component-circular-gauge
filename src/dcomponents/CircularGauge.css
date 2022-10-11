@@ -1,0 +1,19 @@
+.dcomponent-circular-gauge {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 150px;
+}
+
+.dcomponent-circular-gauge-outer-circle {
+    stroke-width: 5;
+    fill: transparent
+}
+
+.dcomponent-circular-gauge-inner-arc {
+    opacity: 0.85;
+}
+
+.dcomponent-circular-gauge-text {
+    font-size: 1.5rem;
+    text-anchor: middle;
+    alignment-baseline: middle;
+}
