@@ -1,5 +1,5 @@
 import React from "react";
-import * as d3 from "d3";
+import { arc, interpolate, select } from "d3";
 import "./CircularGauge.css";
 
 type Props = {
@@ -47,7 +47,7 @@ class CircularGauge extends React.Component<Props> {
     draw() {
         const id = this.props.gaugeId + "-canvas";
         const elm = document.getElementById(id);
-        const g = d3.select(`#${id}`);
+        const g = select(`#${id}`);
         g.selectAll("*").remove();
 
         if (elm) {
@@ -60,19 +60,20 @@ class CircularGauge extends React.Component<Props> {
             g.append("circle")
                 .style("stroke", color)
                 .classed("dcomponent-circular-gauge-outer-circle", true)
+                .attr("id", `${id}-rim`)
                 .attr("r", dim.radius)
                 .attr("cx", dim.radius)
                 .attr("cy", dim.radius)
                 .attr("transform", `translate(${dim.xOffset}, ${dim.yOffset})`);
 
-            const arc = d3
-                .arc()
+            const _arc = arc()
                 .innerRadius(50)
                 .outerRadius(dim.radius - 10)
                 .startAngle(0)
                 .endAngle(0);
 
             g.append("path")
+                .attr("id", `${id}-path`)
                 .attr("stroke", color)
                 .attr("fill", color)
                 .classed("dcomponent-circular-gauge-inner-arc", true)
@@ -85,16 +86,17 @@ class CircularGauge extends React.Component<Props> {
                 .transition()
                 .duration(2000)
                 .attrTween("d", (d: any): any => {
-                    const interpolate = d3.interpolate(0, endAngle);
+                    const intp = interpolate(0, endAngle);
                     return (t: number) => {
-                        arc.endAngle(interpolate(t));
-                        return arc(d);
+                        _arc.endAngle(intp(t));
+                        return _arc(d);
                     };
                 });
 
             g.append("text")
                 .text(percentage + "%")
                 .classed("dcomponent-circular-gauge-text", true)
+                .attr("id", `${id}-text`)
                 .attr("fill", color)
                 .attr(
                     "transform",

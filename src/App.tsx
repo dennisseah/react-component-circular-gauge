@@ -3,23 +3,14 @@ import "./App.css";
 import CircularGauge from "./dcomponents/CircularGauge";
 
 class App extends React.Component {
-    state = {
-        val: 30,
-    };
     render() {
         return (
             <div className="App">
-                <button
-                    onClick={() => {
-                        this.setState({ val: 60 });
-                    }}
-                >
-                    Test
-                </button>
+                <div>Circular Gauge</div>
                 <div style={{ display: "flex" }}>
                     <CircularGauge
                         gaugeId="gauge1"
-                        percentage={this.state.val}
+                        percentage={200}
                         color="#C14646"
                     />
                     <CircularGauge
