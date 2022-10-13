@@ -1,4 +1,3 @@
-import React from "react";
 import { render, queryByAttribute } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CircularGauge from "./CircularGauge";
@@ -31,7 +30,7 @@ const testRunner = (id: string, percentage: number) => {
     expect(textElement?.textContent).toBe(`${percentage}%`);
 };
 
-test("test circular gauge component", () => {
+test("circular gauge component", () => {
     testRunner("test1", 0);
     testRunner("test2", 10);
     testRunner("test3", 200);
